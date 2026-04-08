@@ -16,27 +16,27 @@
     "indicado_para": "Quem busca segurança com rendimento diário"
   },
   {
-    "nome": "LCI/LCA",
+    "nome": "Poupança",
     "categoria": "renda_fixa",
+    "risco": "muito baixo",
+    "rentabilidade": "0,5% ao mês + TR",
+    "aporte_minimo": 1.00,
+    "indicado_para": "Reserva de emergência com liquidez imediata"
+  },
+  {
+    "nome": "Fundo DI / Renda Fixa com liquidez diária",
+    "categoria": "fundo",
     "risco": "baixo",
-    "rentabilidade": "95% do CDI",
-    "aporte_minimo": 1000.00,
-    "indicado_para": "Quem pode esperar 90 dias (isento de IR)"
-  },
-  {
-    "nome": "Fundo Multimercado",
-    "categoria": "fundo",
-    "risco": "medio",
-    "rentabilidade": "CDI + 2%",
-    "aporte_minimo": 500.00,
-    "indicado_para": "Perfil moderado que busca diversificação"
-  },
-  {
-    "nome": "Fundo de Ações",
-    "categoria": "fundo",
-    "risco": "alto",
-    "rentabilidade": "Variável",
+    "rentabilidade": "CDI ou próximo",
     "aporte_minimo": 100.00,
-    "indicado_para": "Perfil arrojado com foco no longo prazo"
+    "indicado_para": "Reserva de emergência com liquidez rápida e segurança"
+  },
+  {
+    "nome": "CDB de bancos digitais com liquidez diária",
+    "categoria": "renda_fixa",
+    "risco": "baixo (coberto pelo FGC até R$ 250.000)",
+    "rentabilidade": "100% a 120% do CDI",
+    "aporte_minimo": 100.00,
+    "indicado_para": "Reserva de emergência, alta liquidez e rendimento melhor que a poupança"
   }
 ]
