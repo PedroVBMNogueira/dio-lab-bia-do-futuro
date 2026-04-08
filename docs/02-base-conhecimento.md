@@ -2,39 +2,70 @@
 
 ## Dados Utilizados
 
-Descreva se usou os arquivos da pasta `data`, por exemplo:
-
-| Arquivo | Formato | Utilização no Agente |
+| Arquivo | Formato | Utilização no Agente Rê |
 |---------|---------|---------------------|
-| `historico_atendimento.csv` | CSV | Contextualizar interações anteriores |
-| `perfil_investidor.json` | JSON | Personalizar recomendações |
-| `produtos_financeiros.json` | JSON | Sugerir produtos adequados ao perfil |
-| `transacoes.csv` | CSV | Analisar padrão de gastos do cliente |
-
-> [!TIP]
-> **Quer um dataset mais robusto?** Você pode utilizar datasets públicos do [Hugging Face](https://huggingface.co/datasets) relacionados a finanças, desde que sejam adequados ao contexto do desafio.
+| `historico_atendimento.csv` | CSV | Dar continuidade ao antendimento anterior de forma mais eficiente |
+| `perfil_investidor.json` | JSON | Personalizar explicações especificas para cada perfil de cliente |
+| `produtos_financeiros.json` | JSON | Sugerir produtos adequados ao perfil de cada cliente  |
+| `transacoes.csv` | CSV | Analisar padrão de gastos e da reserva de emergência do cliente |
 
 ---
 
 ## Adaptações nos Dados
 
 > Você modificou ou expandiu os dados mockados? Descreva aqui.
+## 1. produtos_financeiros.json
+**Objetivo:** adequar os produtos financeiros ao foco do agente Rê, voltado para **reserva de emergência**.
 
-[Sua descrição aqui]
+**Mudanças realizadas:**
 
----
+- **Removidos produtos não ideais para reserva de emergência:**
+  - **LCI/LCA** – exige esperar 90 dias para resgate; não serve para emergência imediata.
+  - **Fundo Multimercado** – risco médio e rendimento variável; não é ideal para emergência.
+  - **Fundo de Ações** – risco alto e volatilidade grande; indicado apenas para longo prazo.
+
+- **Adicionados:**
+  - **Poupança** – risco muito baixo, liquidez imediata; ideal para segurança máxima.
+  - **Fundo DI / Renda Fixa com liquidez diária** – baixo risco, rendimento próximo ao CDI, liquidez rápida.
+  - **CDB de bancos digitais com liquidez diária** – baixo risco (coberto pelo FGC), rendimento melhor que a poupança, alta liquidez.
+
+## 2. transacoes.csv
+**Objetivo:** incluir simulação de reserva de emergência no fluxo de transações do usuário.
+
+**Mudanças realizadas:**
+- **Inclusão de linha para Reserva de Emergência:**
+  - **Descrição:** Reserva de Emergência
+  - **Categoria:** poupanca
+  - **Tipo:** saida
+  - **Valor:** 10% da receita mensal (R$ 500,00)
+  - **Data:** mesmo dia do salário (1º do mês), reforçando o hábito de poupar imediatamente
+
+**Objetivo desta alteração:** permitir que o agente Rê **identifique oportunidades de poupança, acompanhe a reserva de emergência e eduque o usuário** sobre hábitos financeiros consistentes.
 
 ## Estratégia de Integração
 
 ### Como os dados são carregados?
 > Descreva como seu agente acessa a base de conhecimento.
 
-[ex: Os JSON/CSV são carregados no início da sessão e incluídos no contexto do prompt]
+ Os dados podem ser carregados via código conforme documentação ou via prompt.
+``` Python
+import pandas as pd
+import json
+
+historico = pd.read_csv('data/historico_atendimento.csv')
+transacoes = pd.read_csv('data/transacoes.csv')
+
+with open('data/perfil_investidor.json','r', encoding = 'utf-8') as f:
+  perfil = json.load(f)
+
+with open('data/produtos.json','r', encoding = 'utf-8') as f:
+  produtos = json.load(f)
+```
 
 ### Como os dados são usados no prompt?
 > Os dados vão no system prompt? São consultados dinamicamente?
 
-[Sua descrição aqui]
+Os dados podem ir do system do prompt para a solução ficar mais simples, pratica e de melhor entendimento. 
 
 ---
 
@@ -46,10 +77,19 @@ Descreva se usou os arquivos da pasta `data`, por exemplo:
 Dados do Cliente:
 - Nome: João Silva
 - Perfil: Moderado
-- Saldo disponível: R$ 5.000
+- Renda Mensal: R$ 5.000
+- Objetivo: Construir reserva de emergência
 
-Últimas transações:
-- 01/11: Supermercado - R$ 450
-- 03/11: Streaming - R$ 55
-...
+Transações Principais:
+- 01/10: Salário - R$ 5000
+- 01/10: Reserva de Emergência - R$ 500
+- 02/10: Aluguel - R$ 1200
+- 03/10: Supermercado - R$ 450
+
+Produtos Disponiveis:
+- Tesouro Selic
+- CDB Liquidez Diária
+- Poupança
+- Fundo DI / Renda Fixa com liquidez diária
+- CDB de bancos digitais com liquidez diária 
 ```
