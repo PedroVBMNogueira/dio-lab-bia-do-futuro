@@ -2,14 +2,17 @@
 
 Esta pasta contém o código do seu agente financeiro.
 
+#Passo a Passo
+```
+Baixar o Ollama(rodar localmente)
+Baixar um modelo leve("gemma4:e2b")
+```
+
 ## Estrutura Sugerida
 
 ```
 src/
 ├── app.py              # Aplicação principal (Streamlit/Gradio)
-├── agente.py           # Lógica do agente
-├── config.py           # Configurações (API keys, etc.)
-└── requirements.txt    # Dependências
 ```
 
 ## Exemplo de requirements.txt
